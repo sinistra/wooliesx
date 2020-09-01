@@ -1,0 +1,26 @@
+---
+- hosts: linode
+  tasks:
+    - name: Get the git version
+      run_once: true
+      shell: git describe
+      delegate_to: localhost
+      register: tag
+    - name: add docker-compose yml file
+      run_once: true
+      template:
+        src: "docker-compose.yml"
+        dest: "/root/docker/wooliesx/docker-compose.yml"
+    - name: add env file
+      run_once: true
+      copy:
+        src: ".env"
+        dest: "/root/docker/wooliesx/"
+    - name: Change the working directory & exec docker-compose down
+      shell:
+        cmd: docker-compose down
+        chdir: "/root/docker/wooliesx/"
+    - name: Change the working directory & exec docker-compose up
+      shell:
+        cmd: docker-compose up -d
+        chdir: "/root/docker/wooliesx/"

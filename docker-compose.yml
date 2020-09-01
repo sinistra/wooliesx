@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  api:
+    image: dfranciswoolies/ciarecruitment-bestapiever:247904
+    container_name: wooliesx
+    ports:
+      - 8001:80
+    env_file:
+      - '.env'
+    # environment:
+    #   APIKEY: /run/secrets/woolies_apikey
+    # secrets:
+    #   - woolies_apikey
+    networks: 
+      - common
+networks:
+  common:
+    external:
+      name: common
+  
+# secrets:
+#   woolies_apikey:
+#     file: woolies_apikey.txt
